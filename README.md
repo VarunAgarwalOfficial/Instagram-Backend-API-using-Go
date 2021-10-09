@@ -11,7 +11,7 @@ or
 ```bash
 ./main.exe
 ```
-## APi End points
+## API End points
     1. POST /user
     with body like :
 ```json
