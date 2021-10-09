@@ -23,12 +23,12 @@ or
 ```
 
 This will Store your user information to mongoDB with password encrypted with MD5
-![plot](./1.png)
+![plot](./images/1.png)
  
 
     2. GET /users/userId
 This will Retrive your user information from mongoDB with password encrypted with MD5
-![plot](./2.png)
+![plot](./images/2.png)
 
     3. POST /posts
     with body like :
@@ -41,23 +41,23 @@ This will Retrive your user information from mongoDB with password encrypted wit
 }
 ```
 This will Store your post in mongoDB
-![plot](./3.png)
+![plot](./images/3.png)
 
     4. GET /posts/postId
 This will Retrive your post information from mongoDB
-![plot](./4.png)
+![plot](./images/4.png)
 
     5. GET /posts/users/userId/(optional)PageNO
 This will retrive all posts from a use with a given PageNO (Default is page 1) (posts per page is set to 5)
 
 As shown below , there are 7 Sample posts by user Varun (userId : 61619a80bf07eff36d14bb4a) in the system.
-![plot](./5_1.png)
+![plot](./images/5_1.png)
 
 As shown below , the first 5 were loaded in the get request with default parameters
-![plot](./5_2.png)
+![plot](./images/5_2.png)
 
 And the remaining 2 were loaded when the PageNO was given as 2
-![plot](./5_3.png)
+![plot](./images/5_3.png)
 
 ## Other Features
     1. Passwords are securely stored such they can't be reverse engineered
