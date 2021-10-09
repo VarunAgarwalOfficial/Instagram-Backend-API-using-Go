@@ -67,4 +67,4 @@ And the remaining 2 were loaded when the PageNO was given as 2
     3. Pagination is used to list all the posts
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](https://choosealicense.com/licenses/mit/). 
