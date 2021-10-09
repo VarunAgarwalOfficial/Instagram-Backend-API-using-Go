@@ -12,7 +12,7 @@ or
 ./main.exe
 ```
 ## API End points
-    1. POST /user
+    1. POST /users
     with body like :
 ```json
 {
