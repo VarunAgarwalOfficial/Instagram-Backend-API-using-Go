@@ -1,70 +1,46 @@
-# Task  | Instagram Backend API
+# Instagram-Style REST API in Go
 
-Submission for Appointy technical task for internship round 
+A small REST API in Go that copies a few parts of Instagram's backend: creating and fetching users, creating and fetching posts, and listing a user's posts page by page. It uses only the standard `net/http` package and stores data in MongoDB.
 
-## Usage
+![Listing a user's posts, first page](images/5_2.png)
+
+## Why it is interesting
+
+- Routing is done by hand with `http.ServeMux` and by splitting the URL path, with no web framework.
+- Listing a user's posts is paginated with MongoDB `limit` and `skip`, five posts per page, with an optional page number in the path.
+- Passwords are stored as a base64-encoded MD5 hash rather than in plain text. Unsalted MD5 is not a safe way to store passwords; a real service would use bcrypt or Argon2.
+- Every handler takes one global mutex, so requests are processed one at a time. The error paths return without releasing it, so a single bad request leaves the server stuck.
+
+Endpoints (server on `localhost:8080`):
+
+```
+POST /users                         {"name": "...", "email": "...", "password": "..."}
+GET  /users/<userId>
+POST /posts                         {"caption": "...", "imageUrl": "...", "time": "...", "userId": "..."}
+GET  /posts/<postId>
+GET  /posts/users/<userId>[/<page>] five posts per page, page 1 by default
+```
+
+## Run it
+
+Needs MongoDB running on `localhost:27017`; the API uses a database called `appointy`.
+
+The code was written in 2021 for Go's pre-modules GOPATH mode: there is no `go.mod` and `main.go` imports `./restAPI` by relative path. Current Go rejects that in module mode, so it needs an older toolchain (Go 1.21 or earlier) in GOPATH mode. These are the 2021-era steps and have not been re-run since; `go get` may now fetch a newer driver layout than the code expects:
 
 ```bash
+export GO111MODULE=off
+go get go.mongodb.org/mongo-driver/mongo
 go run main.go
 ```
-or
-```bash
-./main.exe
-```
-## API End points
-    1. POST /users
-    with body like :
-```json
-{
-    "name":"Varun Agarwal",
-    "email": "varun.agarwal2019@vitstudent.ac.in",
-    "password" : "12345678"
-}
-```
 
-This will Store your user information to mongoDB with password encrypted with MD5
-![plot](./images/1.png)
- 
+## Tech
 
-    2. GET /users/userId
-This will Retrive your user information from mongoDB with password encrypted with MD5
-![plot](./images/2.png)
+Go, net/http, MongoDB Go driver.
 
-    3. POST /posts
-    with body like :
-```json
-{
-    "caption":"Hello World this is my first Post" ,
-    "imageUrl" : "instagram.com/1.png",
-    "time" : "6:20 PM 09/10/2021",
-    "userId" : "61619a80bf07eff36d14bb4a"
-}
-```
-This will Store your post in mongoDB
-![plot](./images/3.png)
+## Context
 
-    4. GET /posts/postId
-This will Retrive your post information from mongoDB
-![plot](./images/4.png)
-
-    5. GET /posts/users/userId/(optional)PageNO
-This will retrive all posts from a use with a given PageNO (Default is page 1) (posts per page is set to 5)
-
-As shown below , there are 7 Sample posts by user Varun (userId : 61619a80bf07eff36d14bb4a) in the system.
-![plot](./images/5_1.png)
-
-As shown below , the first 5 were loaded in the get request with default parameters
-![plot](./images/5_2.png)
-
-And the remaining 2 were loaded when the PageNO was given as 2
-![plot](./images/5_3.png)
-
-## Other Features
-    1. Passwords are securely stored such they can't be reverse engineered
-
-    2. The server thread safe by locking and unlocking each function call to 1 single thread
-
-    3. Pagination is used to list all the posts
+Submission for the Appointy technical task (internship round), October 2021.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/). 
+
+MIT, see LICENSE.
