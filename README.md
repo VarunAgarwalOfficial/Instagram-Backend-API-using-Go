@@ -1,5 +1,7 @@
 # Instagram-Style REST API in Go
 
+> **Archived.** No longer maintained. This repository is kept as a record and is read-only.
+
 A small REST API in Go that copies a few parts of Instagram's backend: creating and fetching users, creating and fetching posts, and listing a user's posts page by page. It uses only the standard `net/http` package and stores data in MongoDB.
 
 ![Listing a user's posts, first page](images/5_2.png)
